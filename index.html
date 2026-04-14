@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salus - Sabrina Costa Chiminacio | Desenvolvimento Humano e Organizacional</title>
+<meta name="description" content="Desenvolvimento humano e organizacional para criar ambientes mais seguros, saudaveis e conectados com o potencial de quem faz o trabalho acontecer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ Reset & Base ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#2d2a26;background:#f5efe6;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+.font-heading{font-family:'Cormorant Garamond',Georgia,serif}
+
+/* ═══ Container ═══ */
+.container{width:100%;max-width:1280px;margin:0 auto;padding:0 1rem}
+@media(min-width:640px){.container{padding:0 1.5rem}}
+@media(min-width:1024px){.container{padding:0 2rem}}
+
+/* ═══ Reveal Animation ═══ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ Navbar ═══ */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:50;transition:all .5s ease;padding:1.25rem 0}
+.navbar.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);box-shadow:0 1px 3px rgba(0,0,0,.08);padding:.75rem 0}
+.navbar .container{display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:40px;width:auto}
+.nav-links{display:none;align-items:center;gap:2rem}
+.nav-links a{font-size:.875rem;font-weight:500;letter-spacing:.025em;transition:color .3s;color:white}
+.navbar.scrolled .nav-links a{color:#2d2a26}
+.nav-links a:hover{color:#c47a3a}
+.nav-cta{display:inline-flex;align-items:center;padding:.625rem 1.25rem;border-radius:9999px;background:#c47a3a;color:white!important;font-size:.875rem;font-weight:600;transition:all .3s}
+.nav-cta:hover{background:rgba(196,122,58,.9);box-shadow:0 10px 25px rgba(196,122,58,.25)}
+@media(min-width:1024px){.nav-links{display:flex}}
+.hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:24px;height:2px;background:white;transition:all .3s}
+.navbar.scrolled .hamburger span{background:#2d2a26}
+@media(min-width:1024px){.hamburger{display:none}}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.98);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:1.25rem;font-weight:500;color:#2d2a26}
+.mobile-menu a:hover{color:#c47a3a}
+.mobile-close{position:absolute;top:1.5rem;right:1.5rem;font-size:2rem;background:none;border:none;cursor:pointer;color:#2d2a26}
+
+/* ═══ Hero ═══ */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(30,28,25,.85) 0%,rgba(30,28,25,.6) 50%,rgba(30,28,25,.3) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;padding:8rem 0 4rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:9999px;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);font-size:.875rem;margin-bottom:2rem}
+.hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.5rem,6vw,4.5rem);color:white;line-height:1.1;margin-bottom:1.5rem}
+.hero h1 em{color:#c47a3a;font-style:italic}
+.hero-desc{color:rgba(255,255,255,.7);font-size:1.125rem;max-width:540px;line-height:1.7;margin-bottom:2.5rem}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:1rem}
+.btn-primary{padding:.875rem 2rem;border-radius:9999px;background:#c47a3a;color:white;font-weight:600;font-size:1rem;transition:all .3s;border:none;cursor:pointer}
+.btn-primary:hover{background:rgba(196,122,58,.9);box-shadow:0 10px 30px rgba(196,122,58,.3);transform:translateY(-2px)}
+.btn-outline{padding:.875rem 2rem;border-radius:9999px;background:transparent;color:white;font-weight:600;font-size:1rem;border:2px solid rgba(255,255,255,.3);transition:all .3s;cursor:pointer}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;text-align:center;color:rgba(255,255,255,.5)}
+.scroll-indicator span{display:block;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.5rem}
+.scroll-arrow{width:2px;height:30px;background:rgba(255,255,255,.3);margin:0 auto;position:relative}
+.scroll-arrow::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:8px;height:8px;border-right:2px solid rgba(255,255,255,.5);border-bottom:2px solid rgba(255,255,255,.5);transform:translateX(-50%) rotate(45deg);animation:bounce-scroll 2s ease-in-out infinite}
+
+/* ═══ About ═══ */
+.about{padding:6rem 0;background:#f5efe6}
+.about-grid{display:grid;gap:4rem;align-items:center}
+@media(min-width:1024px){.about-grid{grid-template-columns:1fr 1.2fr}}
+.about-portrait{position:relative}
+.about-portrait img{border-radius:1.5rem;width:100%;max-width:400px;margin:0 auto;box-shadow:0 25px 50px rgba(0,0,0,.1)}
+.about-text h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,4vw,3rem);color:#2d2a26;margin-bottom:1.5rem;line-height:1.2}
+.about-text p{color:rgba(45,42,38,.7);margin-bottom:1rem;line-height:1.8}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(45,42,38,.1)}
+.stat-item{text-align:center}
+.stat-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:2.5rem;font-weight:700;color:#c47a3a}
+.stat-label{font-size:.75rem;color:rgba(45,42,38,.5);text-transform:uppercase;letter-spacing:.1em;margin-top:.25rem}
+
+/* ═══ Quote ═══ */
+.quote-section{padding:5rem 0;background:#2d2a26;text-align:center}
+.quote-section blockquote{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.5rem,3vw,2.25rem);color:rgba(255,255,255,.85);font-style:italic;max-width:800px;margin:0 auto;line-height:1.5}
+.quote-section cite{display:block;margin-top:1.5rem;font-size:1rem;color:#c47a3a;font-style:normal;font-weight:500}
+
+/* ═══ Methodology ═══ */
+.methodology{padding:6rem 0;background:white}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-label{font-size:.875rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#c47a3a}
+.section-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,4vw,3rem);color:#2d2a26;margin-top:.75rem;line-height:1.2}
+.method-step{display:flex;gap:1.5rem;padding:1.5rem;border-radius:1rem;background:#f5efe6;margin-bottom:1rem;transition:all .5s}
+.method-step:hover{box-shadow:0 10px 30px rgba(196,122,58,.08);transform:translateX(4px)}
+.method-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:2rem;font-weight:700;color:#c47a3a;min-width:3rem}
+.method-step h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;font-weight:600;color:#2d2a26;margin-bottom:.25rem}
+.method-step p{font-size:.875rem;color:rgba(45,42,38,.6)}
+
+/* ═══ Gallery ═══ */
+.gallery{padding:4rem 0;overflow:hidden;background:#f0e6d3}
+.gallery-label{padding:0 1rem;margin-bottom:2rem}
+.gallery-track{display:flex;gap:1rem;width:max-content}
+.gallery-track-reverse{display:flex;gap:1rem;width:max-content;margin-top:1rem}
+.gallery-item{width:288px;height:192px;flex-shrink:0;border-radius:.75rem;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.1)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.gallery-item:hover img{transform:scale(1.05)}
+@keyframes scroll-gallery{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scroll-gallery-reverse{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.gallery-track{animation:scroll-gallery 60s linear infinite}
+.gallery-track:hover{animation-play-state:paused}
+.gallery-track-reverse{animation:scroll-gallery-reverse 65s linear infinite}
+.gallery-track-reverse:hover{animation-play-state:paused}
+
+/* ═══ Solutions ═══ */
+.solutions{padding:6rem 0;background:white}
+.solutions-grid{display:grid;gap:1.5rem;max-width:900px;margin:0 auto}
+@media(min-width:768px){.solutions-grid{grid-template-columns:repeat(2,1fr)}}
+.solution-card{padding:2rem;border-radius:1rem;background:#f5efe6;border:1px solid rgba(45,42,38,.08);transition:all .5s}
+.solution-card:hover{box-shadow:0 15px 40px rgba(196,122,58,.08);transform:translateY(-4px);border-color:rgba(196,122,58,.2)}
+.solution-icon{font-size:2rem;margin-bottom:1rem}
+.solution-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;font-weight:600;color:#2d2a26;margin-bottom:.5rem}
+.solution-card p{font-size:.875rem;color:rgba(45,42,38,.6);line-height:1.6}
+
+/* ═══ Themes ═══ */
+.themes{padding:6rem 0;background:#f5efe6}
+.theme-item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;border-radius:.75rem;background:white;margin-bottom:.75rem;border:1px solid rgba(45,42,38,.08);transition:all .5s}
+.theme-item:hover{box-shadow:0 10px 30px rgba(196,122,58,.05)}
+.theme-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.theme-item h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.125rem;font-weight:600;color:#2d2a26}
+.theme-item p{font-size:.8125rem;color:rgba(45,42,38,.6);margin-top:.25rem}
+
+/* ═══ Journeys ═══ */
+.journeys{padding:6rem 0;background:white}
+.journeys-grid{display:grid;gap:2rem}
+@media(min-width:1024px){.journeys-grid{grid-template-columns:repeat(2,1fr)}}
+.journey-card{background:#2d2a26;border-radius:1.5rem;padding:2.5rem;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.15);transition:all .5s}
+.journey-card:hover{transform:translateY(-4px);box-shadow:0 25px 60px rgba(0,0,0,.2)}
+.journey-logo{position:absolute;top:1rem;right:1rem;width:5rem;height:5rem;opacity:.2}
+.journey-logo img{width:100%;height:100%;object-fit:contain}
+.journey-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.875rem;font-weight:700;color:#d4874d;margin-bottom:.5rem}
+.journey-card .subtitle{color:rgba(255,255,255,.9);font-weight:500;margin-bottom:.75rem}
+.journey-card .desc{font-size:.875rem;color:rgba(255,255,255,.7);margin-bottom:1rem;line-height:1.7}
+.journey-card blockquote{font-style:italic;font-size:.875rem;color:rgba(255,255,255,.7);padding-left:1rem;border-left:2px solid rgba(212,135,77,.4);margin-bottom:1.5rem}
+.journey-tags{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.5rem}
+.journey-tag{padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:500}
+.journey-tag.orange{background:rgba(212,135,77,.2);color:#d4874d}
+.journey-tag.white{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
+.journey-gains-title{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#d4874d;margin-bottom:.75rem}
+.journey-gain{display:flex;align-items:flex-start;gap:.5rem;font-size:.875rem;color:rgba(255,255,255,.8);margin-bottom:.5rem}
+.journey-gain svg{flex-shrink:0;margin-top:2px}
+
+/* ═══ Clients ═══ */
+.clients{padding:6rem 0;background:white}
+.clients-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem;align-items:center;justify-items:center;max-width:900px;margin:0 auto}
+@media(min-width:640px){.clients-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.clients-grid{grid-template-columns:repeat(4,1fr)}}
+.client-logo{filter:grayscale(1);opacity:.7;transition:all .5s;padding:1rem}
+.client-logo:hover{filter:grayscale(0);opacity:1}
+.client-logo img{height:3.5rem;width:auto;max-width:160px;object-fit:contain;margin:0 auto}
+@media(min-width:640px){.client-logo img{height:4rem}}
+
+/* ═══ Formations ═══ */
+.formations{padding:6rem 0;background:#f5efe6}
+.formation-item{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid rgba(45,42,38,.08)}
+.formation-item svg{flex-shrink:0;margin-top:2px}
+.formation-item span{font-size:.9375rem;color:rgba(45,42,38,.75)}
+
+/* ═══ PhotoBreak ═══ */
+.photo-break{position:relative;height:400px;overflow:hidden}
+.photo-break img{width:100%;height:100%;object-fit:cover}
+.photo-break-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(245,239,230,.3),rgba(245,239,230,.1))}
+
+/* ═══ Testimonials ═══ */
+.testimonials{padding:6rem 0;background:#f7f0e6}
+.testimonial-card{max-width:900px;margin:0 auto;background:white;border-radius:1rem;padding:2.5rem 3rem;box-shadow:0 15px 40px rgba(0,0,0,.06);position:relative}
+.testimonial-card .quote-icon{position:absolute;top:1.5rem;left:2rem;width:3rem;height:3rem;opacity:.15;color:#c47a3a}
+.testimonial-text{font-size:1.125rem;line-height:1.7;font-style:italic;color:#2d2a26;margin-bottom:2rem}
+.testimonial-author{display:flex;align-items:center;gap:1rem}
+.testimonial-avatar{width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:.875rem}
+.testimonial-name{font-weight:600;color:#2d2a26}
+.testimonial-role{font-size:.875rem;color:rgba(45,42,38,.6)}
+.testimonial-dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
+.testimonial-dot{width:10px;height:10px;border-radius:9999px;border:none;cursor:pointer;transition:all .3s;background:rgba(45,42,38,.2)}
+.testimonial-dot.active{width:2rem;background:#c47a3a}
+.testimonial-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-top:2.5rem;max-width:900px;margin-left:auto;margin-right:auto}
+@media(min-width:768px){.testimonial-mini-grid{grid-template-columns:repeat(4,1fr)}}
+.testimonial-mini{padding:1rem;border-radius:.75rem;text-align:left;border:1px solid rgba(45,42,38,.1);background:rgba(255,255,255,.5);cursor:pointer;transition:all .3s}
+.testimonial-mini.active{background:white;border-color:#c47a3a;box-shadow:0 10px 25px rgba(0,0,0,.06)}
+.testimonial-mini:hover{box-shadow:0 5px 15px rgba(0,0,0,.04)}
+.mini-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.mini-avatar{width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:.6875rem;font-weight:600}
+.mini-name{font-size:.75rem;font-weight:600;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-text{font-size:.75rem;color:rgba(45,42,38,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ═══ Contact ═══ */
+.contact{padding:6rem 0;background:white}
+.contact-grid{display:grid;gap:4rem;max-width:1000px;margin:0 auto}
+@media(min-width:1024px){.contact-grid{grid-template-columns:1fr 1fr}}
+.contact-info h3,.contact-form h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.5rem;color:#2d2a26;font-weight:600;margin-bottom:1.5rem}
+.contact-link{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:.75rem;background:#f5efe6;margin-bottom:.75rem;transition:all .3s}
+.contact-link:hover{background:#ede4d5}
+.contact-link .icon{font-size:1.5rem}
+.contact-link .label{font-size:.75rem;color:rgba(45,42,38,.5);text-transform:uppercase;letter-spacing:.05em}
+.contact-link .value{font-weight:500;color:#2d2a26;transition:color .3s}
+.contact-link:hover .value{color:#c47a3a}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.875rem;font-weight:500;color:rgba(45,42,38,.7);margin-bottom:.25rem}
+.form-group input,.form-group textarea{width:100%;padding:.75rem 1rem;border-radius:.75rem;background:#f5efe6;border:1px solid #e5dac8;outline:none;transition:all .3s;font-family:inherit;font-size:1rem;color:#2d2a26}
+.form-group input:focus,.form-group textarea:focus{border-color:#c47a3a;box-shadow:0 0 0 3px rgba(196,122,58,.15)}
+.form-group textarea{resize:none}
+.btn-submit{width:100%;padding:.875rem;border-radius:9999px;background:#c47a3a;color:white;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:all .3s}
+.btn-submit:hover{background:rgba(196,122,58,.9);box-shadow:0 10px 30px rgba(196,122,58,.25)}
+
+/* ═══ Footer ═══ */
+.footer{background:#1e1c19;padding-top:4rem;padding-bottom:0}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:3rem}
+@media(min-width:768px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.footer-grid{grid-template-columns:1.2fr 1fr 1fr 1fr;gap:2rem}}
+.footer h4{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.125rem;font-weight:600;color:white;margin-bottom:1.25rem}
+.footer p,.footer span{color:rgba(255,255,255,.5);font-size:.875rem}
+.footer a{color:rgba(255,255,255,.5);font-size:.875rem;transition:color .3s}
+.footer a:hover{color:#c47a3a}
+.footer-brand p{line-height:1.7;margin-bottom:1.5rem}
+.footer-social{display:flex;gap:.75rem}
+.footer-social a{width:2.5rem;height:2.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);transition:all .3s}
+.footer-social a:hover{transform:scale(1.1)}
+.footer-social a svg{width:1rem;height:1rem;fill:white}
+.footer-nav ul,.footer-solutions ul,.footer-contact ul{list-style:none;padding:0}
+.footer-nav li,.footer-solutions li,.footer-contact li{margin-bottom:.75rem}
+.footer-contact li{display:flex;align-items:flex-start;gap:.75rem}
+.footer-contact svg{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:2px;stroke:#c47a3a;fill:none}
+.footer-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;padding:.625rem 1.25rem;border-radius:9999px;background:#c47a3a;color:white!important;font-size:.875rem;font-weight:500;transition:all .3s}
+.footer-cta:hover{transform:scale(1.05)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:3rem;padding:1.5rem 0}
+.footer-bottom-inner{display:flex;flex-direction:column;align-items:center;gap:1rem}
+@media(min-width:640px){.footer-bottom-inner{flex-direction:row;justify-content:space-between}}
+.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.35)}
+.footer-bottom .tagline{color:rgba(255,255,255,.25)}
+
+/* ═══ WhatsApp FAB ═══ */
+.whatsapp-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;width:3.5rem;height:3.5rem;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,.3);transition:transform .3s}
+.whatsapp-fab:hover{transform:scale(1.1)}
+.whatsapp-fab svg{width:1.75rem;height:1.75rem;fill:white}
+
+/* ═══ Animations ═══ */
+@keyframes bounce-scroll{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ Navbar ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#" class="nav-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-002_1d1c190a.png" alt="Salus"></a>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#metodologia">Metodologia</a>
+      <a href="#solucoes">Solucoes</a>
+      <a href="#jornadas">Jornadas</a>
+      <a href="#experiencias">Experiencias</a>
+      <a href="#recomendacoes">Recomendacoes</a>
+      <a href="#contato">Contato</a>
+      <a href="#contato" class="nav-cta">Vamos conversar?</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">&times;</button>
+  <a href="#sobre" class="mobile-link">Sobre</a>
+  <a href="#metodologia" class="mobile-link">Metodologia</a>
+  <a href="#solucoes" class="mobile-link">Solucoes</a>
+  <a href="#jornadas" class="mobile-link">Jornadas</a>
+  <a href="#experiencias" class="mobile-link">Experiencias</a>
+  <a href="#recomendacoes" class="mobile-link">Recomendacoes</a>
+  <a href="#contato" class="mobile-link">Contato</a>
+</div>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+  <div class="hero-bg"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-016_7e98dc25.jpg" alt="Sabrina Costa Chiminacio"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <div class="hero-badge">✦ Desenvolvimento Humano e Organizacional</div>
+    <h1 class="font-heading">Seguranca que nasce<br>das <em>pessoas.</em></h1>
+    <p class="hero-desc">Desenvolvimento humano e organizacional para criar ambientes mais seguros, saudaveis e conectados com o potencial de quem faz o trabalho acontecer.</p>
+    <div class="hero-buttons">
+      <a href="#jornadas" class="btn-primary">Conheca as Jornadas</a>
+      <a href="#contato" class="btn-outline">Vamos conversar?</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Descubra</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══ About ═══ -->
+<section id="sobre" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-portrait reveal">
+        <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-010_9e47ea5d.png" alt="Sabrina Costa Chiminacio">
+      </div>
+      <div class="about-text">
+        <div class="reveal">
+          <span class="section-label">Sobre Sabrina</span>
+          <h2 class="font-heading">Conectando pessoas,<br>transformando culturas</h2>
+        </div>
+        <div class="reveal">
+          <p>Psicologa organizacional com mais de 20 anos de experiencia, Sabrina Costa Chiminacio e especialista em desenvolvimento humano e organizacional com foco em seguranca do trabalho.</p>
+          <p>Fundadora da Salus, atua na interseccao entre comportamento humano, cultura organizacional e seguranca, ajudando empresas a construir ambientes mais seguros, saudaveis e conectados com o potencial de quem faz o trabalho acontecer.</p>
+          <p>Sua abordagem unica combina psicologia, neurociencias, facilitacao de grupos e metodologias ativas para criar experiencias de aprendizagem transformadoras.</p>
+        </div>
+        <div class="stats reveal">
+          <div class="stat-item"><div class="stat-num" data-target="20">0</div><div class="stat-label">Anos de experiencia</div></div>
+          <div class="stat-item"><div class="stat-num" data-target="13">0</div><div class="stat-label">Empresas atendidas</div></div>
+          <div class="stat-item"><div class="stat-num" data-target="1000">0</div><div class="stat-label">Profissionais impactados</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Quote ═══ -->
+<section class="quote-section">
+  <div class="container reveal">
+    <blockquote class="font-heading">"Quem olha para fora, sonha. Quem olha para dentro, desperta."</blockquote>
+    <cite>Carl Jung</cite>
+  </div>
+</section>
+
+<!-- ═══ Methodology ═══ -->
+<section id="metodologia" class="methodology">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Metodologia</span>
+      <h2 class="section-title font-heading">Como a transformacao<br>acontece</h2>
+    </div>
+    <div style="max-width:700px;margin:0 auto">
+      <div class="reveal method-step">
+          <div class="method-num">01</div>
+          <div>
+            <h3>Escuta Ativa e Diagnostico</h3>
+            <p>Compreensao profunda do contexto organizacional, cultura e desafios especificos de seguranca.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">02</div>
+          <div>
+            <h3>Mapeamento de Necessidades</h3>
+            <p>Identificacao das lacunas entre a cultura atual e a desejada, com foco em comportamentos e competencias.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">03</div>
+          <div>
+            <h3>Design da Solucao</h3>
+            <p>Construcao de propostas customizadas, alinhadas aos objetivos estrategicos e a realidade operacional.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">04</div>
+          <div>
+            <h3>Facilitacao e Imersao</h3>
+            <p>Conducao de workshops, oficinas e jornadas com metodologias ativas e experienciais.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">05</div>
+          <div>
+            <h3>Desenvolvimento de Competencias</h3>
+            <p>Capacitacao de lideres e equipes em habilidades nao tecnicas essenciais para a seguranca.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">06</div>
+          <div>
+            <h3>Acompanhamento e Mentoria</h3>
+            <p>Suporte continuo para sustentacao das mudancas e evolucao da maturidade cultural.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">07</div>
+          <div>
+            <h3>Avaliacao de Impacto</h3>
+            <p>Medicao dos resultados e ajustes para garantir a efetividade das intervencoes.</p>
+          </div>
+        </div>
+<div class="reveal method-step">
+          <div class="method-num">08</div>
+          <div>
+            <h3>Sustentacao e Autonomia</h3>
+            <p>Transferencia de conhecimento para que a organizacao mantenha e evolua suas praticas.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Gallery ═══ -->
+<section class="gallery">
+  <div class="gallery-label">
+    <span class="section-label reveal">Momentos que transformam</span>
+  </div>
+  <div class="gallery-track">
+    <div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-068_f90284af.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/planejamento-estrategico_6356310c.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-072_13a7850c.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/brigada-workshop_4b07adc6.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/palestra-klabin_975c3170.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/grupo-equipe_45f4959b.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-034_45deaa4d.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-01_c2f7c371.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/dominos-origami_5ca82366.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-03_76424ec8.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-017_5f80c8f9.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/escrita-mapa_beef5eb0.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-05_d8133726.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-070_2d562566.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-068_f90284af.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/planejamento-estrategico_6356310c.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-072_13a7850c.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/brigada-workshop_4b07adc6.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/palestra-klabin_975c3170.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/grupo-equipe_45f4959b.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-034_45deaa4d.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-01_c2f7c371.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/dominos-origami_5ca82366.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-03_76424ec8.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-017_5f80c8f9.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/escrita-mapa_beef5eb0.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-05_d8133726.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-070_2d562566.jpg" alt="Workshop Salus" loading="lazy"></div>
+  </div>
+  <div class="gallery-track-reverse">
+    <div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/maturidade-cultura_10be4508.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-023_274e2904.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/materiais-mesa_0188d8a9.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-02_081037a2.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-033_e826decb.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/grupo-escada_0685b925.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/academia-seguranca_b644c398.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-04_5d12f908.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-06_f2e71b98.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-07_d8e97ff8.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-08_a8db5389.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-09_0153483a.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-10_29cbfcf1.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-059_7439e453.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/maturidade-cultura_10be4508.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-023_274e2904.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/materiais-mesa_0188d8a9.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-02_081037a2.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-033_e826decb.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/grupo-escada_0685b925.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/academia-seguranca_b644c398.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-04_5d12f908.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-06_f2e71b98.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-07_d8e97ff8.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-08_a8db5389.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-09_0153483a.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/foto-nova-10_29cbfcf1.jpg" alt="Workshop Salus" loading="lazy"></div>
+<div class="gallery-item"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-059_7439e453.jpg" alt="Workshop Salus" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- ═══ Solutions ═══ -->
+<section id="solucoes" class="solutions">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Solucoes</span>
+      <h2 class="section-title font-heading">Caminhos para a<br>transformacao</h2>
+    </div>
+    <div class="solutions-grid">
+      <div class="reveal solution-card">
+          <div class="solution-icon">🎯</div>
+          <h3>Workshops, Encontros e Facilitacao de Planejamentos Estrategicos de Seguranca</h3>
+          <p>Encontros dinamicos e facilitacao de planejamentos estrategicos de seguranca, conectando equipes e liderancas.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">🚀</div>
+          <h3>Jornadas de Desenvolvimento e Capacitacoes</h3>
+          <p>Experiencias de longa jornada que promovem transformacao profunda e sustentavel na cultura organizacional.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">🧭</div>
+          <h3>Mentorias</h3>
+          <p>Acompanhamento individualizado para lideres e profissionais de seguranca em sua jornada de desenvolvimento.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">📊</div>
+          <h3>Desdobramentos de Acoes de Mapeamentos de Cultura de Seguranca</h3>
+          <p>No contexto de desenvolvimento de Lideres, com diagnostico aprofundado e planos de acao estrategicos.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">⚙️</div>
+          <h3>Alavancagem das Ferramentas de Seguranca</h3>
+          <p>Potencializacao das ferramentas de seguranca existentes com foco em competencias humanas e comportamentais.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">👥</div>
+          <h3>Desenvolvimento de Lideres</h3>
+          <p>Para uma lideranca cuidadora, integrando processos, seguranca e habilidades nao tecnicas.</p>
+        </div>
+<div class="reveal solution-card">
+          <div class="solution-icon">🤝</div>
+          <h3>Desenvolvimento de Equipes de Seguranca</h3>
+          <p>Fortalecimento dos times de seguranca para atuacao mais integrada, colaborativa e conectada com a operacao.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Themes ═══ -->
+<section class="themes">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Temas</span>
+      <h2 class="section-title font-heading">Temas que movem<br>a transformacao</h2>
+    </div>
+    <div style="max-width:700px;margin:0 auto">
+      <div class="reveal theme-item">
+          <div class="theme-dot" style="background:#c47a3a"></div>
+          <div>
+            <h3>Percepcao de Riscos e Gestao Dinamica de Riscos</h3>
+            <p>Teoria e Pratica aplicadas ao contexto operacional</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#5a7a5a"></div>
+          <div>
+            <h3>Observacao e Abordagem de Comportamentos</h3>
+            <p>Com desenvolvimento teorico e pratico</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#4a6a8a"></div>
+          <div>
+            <h3>Metodologia ABC</h3>
+            <p>Teoria e Pratica</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#c47a3a"></div>
+          <div>
+            <h3>Novos Olhares e Visoes na Evolucao da Seguranca</h3>
+            <p>Perspectivas contemporaneas e disruptivas</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#5a7a5a"></div>
+          <div>
+            <h3>Seguranca Psicologica</h3>
+            <p>Mapeamento e Desdobramentos</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#4a6a8a"></div>
+          <div>
+            <h3>Escuta Ativa, Comunicacao Assertiva e Metodologias Ativas</h3>
+            <p>Disruptivas e Colaborativas para resolucao de problemas</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#c47a3a"></div>
+          <div>
+            <h3>Cultura e Maturidade</h3>
+            <p>Evolucao da maturidade organizacional em seguranca</p>
+          </div>
+        </div>
+<div class="reveal theme-item">
+          <div class="theme-dot" style="background:#5a7a5a"></div>
+          <div>
+            <h3>Competencias para Ferramentas de Seguranca</h3>
+            <p>Novas Competencias diante da evolucao da seguranca</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Journeys ═══ -->
+<section id="jornadas" class="journeys">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Jornadas de Transformacao</span>
+      <h2 class="section-title font-heading">Experiencias que geram<br>movimento e evolucao</h2>
+      <p style="color:rgba(45,42,38,.6);font-size:1.125rem;margin-top:1rem;max-width:600px;margin-left:auto;margin-right:auto">Programas de longa duracao desenhados para transformar profundamente a cultura de seguranca das organizacoes.</p>
+    </div>
+    <div class="journeys-grid">
+      <!-- Movimentum -->
+      <div class="journey-card reveal">
+        <div class="journey-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-040_bb0e71ba.png" alt=""></div>
+        <h3 class="font-heading">Movimentum</h3>
+        <p class="subtitle">Gestao Dinamica de Riscos a partir da Pratica de Oficinas de Percepcao de Risco</p>
+        <p class="desc">A jornada desenvolve nas liderancas e equipes operacionais a capacidade de perceber riscos em tempo real, interpretar sinais do ambiente operacional e tomar decisoes mais seguras diante da variabilidade das operacoes.</p>
+        <blockquote>"O risco nao e estatico. Ele se move conforme o trabalho acontece."</blockquote>
+        <div class="journey-tags">
+          <span class="journey-tag orange">6 a 12 meses</span>
+          <span class="journey-tag white">Liderancas, Times Operacionais, Multiplicadores</span>
+        </div>
+        <p class="journey-gains-title">Ganhos da Jornada</p>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Aumento da capacidade das equipes de perceber riscos no ambiente de trabalho real</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Melhoria da qualidade das decisoes operacionais</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Fortalecimento da lideranca na conducao da seguranca, comunicacao e engajamento</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Integracao entre percepcao de riscos e ferramentas de gestao de seguranca</span></div>
+      </div>
+      <!-- Prisma -->
+      <div class="journey-card reveal">
+        <div class="journey-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-037_27a19cb3.png" alt=""></div>
+        <h3 class="font-heading">Prisma</h3>
+        <p class="subtitle">Evolucao Sistemica do Comportamento Seguro</p>
+        <p class="desc">A jornada ajuda a organizacao a compreender as influencias do sistema sobre o comportamento e desenvolver praticas mais conscientes de gestao do risco e da seguranca.</p>
+        <blockquote>"Quando a luz passa por um prisma, ela se divide em varias cores. Da mesma forma, o comportamento humano no trabalho e resultado da interacao de varias forcas."</blockquote>
+        <div class="journey-tags">
+          <span class="journey-tag orange">6 a 12 meses</span>
+          <span class="journey-tag white">Liderancas (todos os niveis) e Times de Seguranca</span>
+        </div>
+        <p class="journey-gains-title">Resultados Esperados</p>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Evolucao do comportamento seguro com maior compreensao das influencias</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Fortalecimento da lideranca para conduzir dialogos e acoes de forma sistemica</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Transformacao de situacoes do dia a dia em oportunidades de aprendizagem</span></div>
+        <div class="journey-gain"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a9e7e" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Sustentacao da cultura de seguranca integrada ao sistema de gestao</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Clients ═══ -->
+<section id="experiencias" class="clients">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Experiencias</span>
+      <h2 class="section-title font-heading">Empresas que confiam<br>na Salus</h2>
+    </div>
+    <div class="clients-grid reveal">
+      <div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/gerdau_a9015dbf.png" alt="Gerdau" title="Gerdau" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/cbmm_ce6314de.png" alt="CBMM" title="CBMM" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/klabin_fd4ecb7f.png" alt="Klabin" title="Klabin" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/syngenta_d8a7020a.png" alt="Syngenta" title="Syngenta" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/cmoc_59898e90.png" alt="CMOC" title="CMOC" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/anglogold_75cb50f9.png" alt="AngloGold Ashanti" title="AngloGold Ashanti" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/aura_eadef303.jpg" alt="Aura Minerals" title="Aura Minerals" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/vli_04c210f6.png" alt="VLI" title="VLI" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/nexa_ec54d94e.png" alt="Nexa Resources" title="Nexa Resources" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/eneva_332faff5.png" alt="Eneva" title="Eneva" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/equinox_09e6b212.png" alt="Equinox Gold" title="Equinox Gold" loading="lazy"></div>
+<div class="client-logo"><img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/ferbasa_797e7a90.png" alt="Ferbasa" title="Ferbasa" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Formations ═══ -->
+<section class="formations">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Formacoes</span>
+      <h2 class="section-title font-heading">Conhecimento que<br>sustenta a pratica</h2>
+    </div>
+    <div style="max-width:700px;margin:0 auto">
+      <div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Psicologia (PUC-PR) e Pos-Graduacao em Gestao Psicologia Organizacional (FAE)</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Art of Hosting - A arte de anfitriar conversas significativas</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Safety Lab - Metodologias de aprendizagens inovadoras (Juliana Bley)</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Lab Imersao para Facilitadores - Juliana Bley</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Facilitacao com Alma e Designer Comportamental - Alma Consultoria</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Arte da Conversa - Facilitacao Visual e Comunicacao (Carol Ramalhete)</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>A pratica da Seguranca Psicologica - Akademie de Transformacao Organizacional</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Facilitador em Modelagem de Cultura - Akademie de Transformacao Organizacional</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Points Of You - Metodologia de conexao e autopercepcao</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Co-Criar - Facilitacao de grupos (Estruturas Libertadoras)</span>
+        </div>
+<div class="reveal formation-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <span>Neurociencias e Comportamento</span>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PhotoBreak ═══ -->
+<section class="photo-break">
+  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-032_6ad5ccd3.jpg" alt="Sabrina na natureza" loading="lazy">
+  <div class="photo-break-overlay"></div>
+</section>
+
+<!-- ═══ Testimonials ═══ -->
+<section id="recomendacoes" class="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Recomendacoes</span>
+      <h2 class="section-title font-heading">O que dizem sobre<br>o trabalho da Sabrina</h2>
+    </div>
+    <div class="reveal">
+      <div class="testimonial-card" id="testimonialCard">
+        <svg class="quote-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <p class="testimonial-text" id="testimonialText"></p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" id="testimonialAvatar"></div>
+          <div>
+            <p class="testimonial-name" id="testimonialName"></p>
+            <p class="testimonial-role" id="testimonialRole"></p>
+          </div>
+          <div style="margin-left:auto">
+            <svg width="20" height="20" fill="#0077b5" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-dots" id="testimonialDots"></div>
+      <div class="testimonial-mini-grid" id="testimonialMiniGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Contact ═══ -->
+<section id="contato" class="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Contato</span>
+      <h2 class="section-title font-heading">Vamos construir juntos<br>ambientes mais humanos?</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3 class="font-heading">Entre em contato</h3>
+        <a href="mailto:salus.sabrina@gmail.com" class="contact-link">
+          <span class="icon">✉️</span>
+          <div><div class="label">E-mail</div><div class="value">salus.sabrina@gmail.com</div></div>
+        </a>
+        <a href="https://wa.me/5541999733413" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <span class="icon">📱</span>
+          <div><div class="label">WhatsApp</div><div class="value">(41) 9.9973-3413</div></div>
+        </a>
+        <a href="https://linkedin.com/in/sabrina-costa-chiminacio" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <span class="icon">💼</span>
+          <div><div class="label">LinkedIn</div><div class="value">/sabrina-costa-chiminacio</div></div>
+        </a>
+        <a href="https://instagram.com/salus.desenvolvimento" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <span class="icon">📷</span>
+          <div><div class="label">Instagram</div><div class="value">@salus.desenvolvimento</div></div>
+        </a>
+      </div>
+      <div class="contact-form reveal">
+        <h3 class="font-heading">Envie uma mensagem</h3>
+        <form id="contactForm">
+          <div class="form-group"><label>Nome</label><input type="text" name="name" required></div>
+          <div class="form-group"><label>E-mail</label><input type="email" name="email" required></div>
+          <div class="form-group"><label>Empresa</label><input type="text" name="company"></div>
+          <div class="form-group"><label>Mensagem</label><textarea name="message" rows="4" required></textarea></div>
+          <button type="submit" class="btn-submit">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+          <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663053061376/b43AdPmivam3xwpv2TwgPQ/img-002_1d1c190a.png" alt="Salus" style="height:40px;width:auto;filter:brightness(2)">
+        </div>
+        <p>Desenvolvimento humano e organizacional para criar ambientes mais seguros, saudaveis e conectados com o potencial de quem faz o trabalho acontecer.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/sabrina-costa-chiminacio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.instagram.com/salusdho/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://wa.me/5541999733413" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4 class="font-heading">Navegacao</h4>
+        <ul>
+          <li><a href="#sobre">Sobre Sabrina</a></li>
+          <li><a href="#metodologia">Metodologia</a></li>
+          <li><a href="#solucoes">Solucoes</a></li>
+          <li><a href="#jornadas">Jornadas</a></li>
+          <li><a href="#experiencias">Experiencias</a></li>
+          <li><a href="#recomendacoes">Recomendacoes</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-solutions">
+        <h4 class="font-heading">Solucoes</h4>
+        <ul>
+          <li><span>Workshops e Facilitacao</span></li>
+          <li><span>Jornadas de Desenvolvimento</span></li>
+          <li><span>Mentorias</span></li>
+          <li><span>Mapeamento de Cultura</span></li>
+          <li><span>Desenvolvimento de Lideres</span></li>
+          <li><span>Desenvolvimento de Equipes</span></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4 class="font-heading">Contato</h4>
+        <ul>
+          <li>
+            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <a href="mailto:salus.sabrina@gmail.com">salus.sabrina@gmail.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <a href="https://wa.me/5541999733413" target="_blank" rel="noopener noreferrer">+55 (41) 99973-3413</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Curitiba, PR - Brasil</span>
+          </li>
+        </ul>
+        <a href="#contato" class="footer-cta">Vamos conversar? <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <p>&copy; 2026 Sabrina Costa Chiminacio - Salus DHO. Todos os direitos reservados.</p>
+        <p class="tagline">Seguranca que nasce das pessoas.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ WhatsApp FAB ═══ -->
+<a href="https://wa.me/5541999733413" target="_blank" rel="noopener noreferrer" class="whatsapp-fab" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ═══ Testimonials Data ═══
+const testimonials = [{"name": "Adriano Krening", "initials": "AK", "role": "Diretor de Operacoes, Gerdau", "text": "Sabrina tem uma capacidade unica de conectar pessoas e propositos. Seu trabalho com nossas equipes trouxe uma nova perspectiva sobre seguranca, tornando-a parte da cultura e nao apenas um protocolo."}, {"name": "Mariana Vasconcelos", "initials": "MV", "role": "Gerente de Seguranca, Klabin", "text": "A abordagem da Sabrina e transformadora. Ela consegue traduzir conceitos complexos de comportamento humano em praticas acessiveis que realmente mudam a forma como as pessoas se relacionam com a seguranca."}, {"name": "Ricardo Fontana", "initials": "RF", "role": "Diretor Industrial, CBMM", "text": "O trabalho da Sabrina com nossa lideranca foi um divisor de aguas. Ela trouxe ferramentas praticas e uma visao humanizada que transformou a maneira como conduzimos a seguranca em nossas operacoes."}, {"name": "Fernanda Oliveira", "initials": "FO", "role": "Coordenadora de DHO, Syngenta", "text": "Sabrina e uma facilitadora excepcional. Sua energia, conhecimento e sensibilidade criam um ambiente de aprendizagem unico. Nossos lideres sairam dos workshops com uma nova mentalidade sobre cuidado e seguranca."}, {"name": "Carlos Eduardo Silva", "initials": "CS", "role": "Gerente de EHS, AngloGold Ashanti", "text": "A Sabrina trouxe uma metodologia inovadora que nos ajudou a evoluir significativamente nossa cultura de seguranca. Seu olhar sistemico e sua capacidade de engajar as pessoas fazem toda a diferenca."}, {"name": "Patricia Mendes", "initials": "PM", "role": "Diretora de Pessoas, VLI", "text": "Trabalhar com a Sabrina foi uma experiencia enriquecedora para toda a organizacao. Ela tem o dom de despertar nas pessoas a consciencia sobre o cuidado genuino, indo muito alem dos indicadores tradicionais."}, {"name": "Gustavo Henrique", "initials": "GH", "role": "Superintendente, Nexa Resources", "text": "A jornada Movimentum transformou a percepcao de risco das nossas equipes. A Sabrina conseguiu criar um programa que e ao mesmo tempo profundo e pratico, com resultados visiveis no dia a dia operacional."}, {"name": "Luciana Campos", "initials": "LC", "role": "Gerente de Cultura, Eneva", "text": "Sabrina e uma profissional rara que combina profundidade teorica com uma pratica envolvente e humanizada. Seu trabalho com nossa equipe de seguranca elevou o nivel de maturidade da nossa cultura organizacional."}];
+const bgColors = ["#c47a3a","#5a7a5a","#4a6a8a","#c47a3a","#5a7a5a","#4a6a8a","#c47a3a","#5a7a5a"];
+let activeTestimonial = 0;
+
+function renderTestimonial(idx) {
+  const t = testimonials[idx];
+  document.getElementById("testimonialText").textContent = '"' + t.text + '"';
+  const avatar = document.getElementById("testimonialAvatar");
+  avatar.textContent = t.initials;
+  avatar.style.backgroundColor = bgColors[idx];
+  document.getElementById("testimonialName").textContent = t.name;
+  document.getElementById("testimonialRole").textContent = t.role;
+  // Update dots
+  document.querySelectorAll(".testimonial-dot").forEach((d, i) => {
+    d.classList.toggle("active", i === idx);
+    d.style.width = i === idx ? "2rem" : "10px";
+    d.style.backgroundColor = i === idx ? "#c47a3a" : "rgba(45,42,38,.2)";
+  });
+  // Update mini cards
+  document.querySelectorAll(".testimonial-mini").forEach((m, i) => {
+    m.classList.toggle("active", i === idx);
+  });
+  activeTestimonial = idx;
+}
+
+function initTestimonials() {
+  const dotsContainer = document.getElementById("testimonialDots");
+  const miniGrid = document.getElementById("testimonialMiniGrid");
+  testimonials.forEach((t, i) => {
+    // Dot
+    const dot = document.createElement("button");
+    dot.className = "testimonial-dot";
+    dot.setAttribute("aria-label", "Depoimento " + (i+1));
+    dot.addEventListener("click", () => renderTestimonial(i));
+    dotsContainer.appendChild(dot);
+    // Mini card
+    const mini = document.createElement("button");
+    mini.className = "testimonial-mini";
+    mini.innerHTML = '<div class="mini-header"><div class="mini-avatar" style="background:' + bgColors[i] + '">' + t.initials + '</div><div class="mini-name">' + t.name + '</div></div><p class="mini-text">' + t.text + '</p>';
+    mini.addEventListener("click", () => renderTestimonial(i));
+    miniGrid.appendChild(mini);
+  });
+  renderTestimonial(0);
+  setInterval(() => {
+    renderTestimonial((activeTestimonial + 1) % testimonials.length);
+  }, 6000);
+}
+
+// ═══ Navbar Scroll ═══
+window.addEventListener("scroll", () => {
+  document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 60);
+}, { passive: true });
+
+// ═══ Mobile Menu ═══
+document.getElementById("hamburgerBtn").addEventListener("click", () => {
+  document.getElementById("mobileMenu").classList.add("open");
+});
+document.getElementById("mobileClose").addEventListener("click", () => {
+  document.getElementById("mobileMenu").classList.remove("open");
+});
+document.querySelectorAll(".mobile-link").forEach(a => {
+  a.addEventListener("click", () => {
+    document.getElementById("mobileMenu").classList.remove("open");
+  });
+});
+
+// ═══ Reveal on Scroll ═══
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+// ═══ Counter Animation ═══
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 40));
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { el.textContent = target + "+"; clearInterval(timer); }
+        else el.textContent = current + "+";
+      }, 30);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll(".stat-num").forEach(el => counterObserver.observe(el));
+
+// ═══ Contact Form ═══
+document.getElementById("contactForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const name = fd.get("name");
+  const email = fd.get("email");
+  const company = fd.get("company");
+  const message = fd.get("message");
+  const body = "Nome: " + name + "%0AEmail: " + email + "%0AEmpresa: " + company + "%0AMensagem: " + message;
+  window.open("mailto:salus.sabrina@gmail.com?subject=Contato via Site - " + name + "&body=" + body);
+  const btn = e.target.querySelector(".btn-submit");
+  btn.textContent = "Mensagem preparada! ✓";
+  setTimeout(() => { btn.textContent = "Enviar mensagem"; }, 3000);
+});
+
+// ═══ Smooth Scroll ═══
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href"));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
+
+// ═══ Init ═══
+document.addEventListener("DOMContentLoaded", initTestimonials);
+</script>
+</body>
+</html>
