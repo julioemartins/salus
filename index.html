@@ -158,11 +158,11 @@ a{text-decoration:none;color:inherit}
 .clients-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem 2rem;align-items:center;justify-items:center}
 @media(min-width:640px){.clients-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1024px){.clients-grid{grid-template-columns:repeat(4,1fr);gap:3rem 2.5rem}}
-.client-logo{filter:grayscale(1);opacity:.6;transition:all .5s;padding:1rem;display:flex;align-items:center;justify-content:center;width:100%;height:90px}
+.client-logo{filter:grayscale(1);opacity:.6;transition:all .5s;padding:.75rem;display:flex;align-items:center;justify-content:center;width:100%;height:80px}
 .client-logo:hover{filter:grayscale(0);opacity:1}
-.client-logo img{width:120px;height:40px;object-fit:contain;margin:0 auto}
-@media(min-width:640px){.client-logo{height:100px}.client-logo img{width:130px;height:42px}}
-@media(min-width:1024px){.client-logo{height:100px}.client-logo img{width:140px;height:44px}}
+.client-logo img{width:100%;height:100%;max-width:180px;max-height:55px;object-fit:contain;margin:0 auto}
+@media(min-width:640px){.client-logo{height:90px}.client-logo img{max-width:190px;max-height:55px}}
+@media(min-width:1024px){.client-logo{height:100px}.client-logo img{max-width:200px;max-height:55px}}
 
 /* ═══ Formations ═══ */
 .formations{padding:6rem 0;background:#f5efe6}
