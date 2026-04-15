@@ -32,7 +32,8 @@ a{text-decoration:none;color:inherit}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:50;transition:all .5s ease;padding:1.25rem 0}
 .navbar.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);box-shadow:0 1px 3px rgba(0,0,0,.08);padding:.75rem 0}
 .navbar .container{display:flex;align-items:center;justify-content:space-between}
-.nav-logo img{height:56px;width:auto}
+.nav-logo img{height:56px;width:auto;filter:brightness(0) invert(1);transition:filter .5s ease}
+.navbar.scrolled .nav-logo img{filter:none}
 .nav-links{display:none;align-items:center;gap:2rem}
 .nav-links a{font-size:.875rem;font-weight:500;letter-spacing:.025em;transition:color .3s;color:white}
 .navbar.scrolled .nav-links a{color:#2d2a26}
